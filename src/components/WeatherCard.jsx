@@ -1,21 +1,22 @@
+// src/components/WeatherCard.jsx
 import React from "react";
 
-const WeatherCard = ({ weather }) => {
+function WeatherCard({ weather }) {
   if (!weather) return null;
 
-  const { name, main, wind, weather: weatherDetails } = weather;
-  const iconUrl = `https://openweathermap.org/img/wn/${weatherDetails[0].icon}@2x.png`;
-
   return (
-    <div className="bg-white shadow p-4 rounded text-center">
-      <h2 className="text-2xl font-bold">{name}</h2>
-      <img src={iconUrl} alt={weatherDetails[0].description} className="mx-auto" />
-      <p className="text-lg">{weatherDetails[0].main}</p>
-      <p>Temperature: {main.temp}°C</p>
-      <p>Humidity: {main.humidity}%</p>
-      <p>Wind Speed: {wind.speed} km/h</p>
+    <div className="bg-sand text-tribal rounded-xl shadow-lg p-6 flex flex-col items-center space-y-4">
+      <h2 className="text-2xl font-bold">{weather.name}</h2>
+      <p className="text-lg italic">{weather.weather[0].description}</p>
+      <p className="text-4xl font-extrabold text-forest">
+        {Math.round(weather.main.temp)}°C
+      </p>
+      <div className="flex justify-between w-full mt-4 text-sm">
+        <p>Humidity: {weather.main.humidity}%</p>
+        <p>Wind: {weather.wind.speed} m/s</p>
+      </div>
     </div>
   );
-};
+}
 
 export default WeatherCard;
