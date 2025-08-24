@@ -1,28 +1,12 @@
-# weather-app
-Discover the weather like never before with Weather Dashboard!  Search any city and instantly see the current conditions before you book a trip
-# Weather Dashboard
+# React + Vite
 
-🌤️ **Discover the weather like never before!**  
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Weather Dashboard lets you search any city and instantly see the current conditions before you book a trip. Plan your travels with confidence by checking temperature, humidity, wind speed, and other weather details in a sleek, user-friendly interface.
+Currently, two official plugins are available:
 
-## Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- Search for any city worldwide  
-- View current weather conditions  
-- See temperature, humidity, wind speed, and more  
-- Clean and intuitive user interface  
+## Expanding the ESLint configuration
 
-## Technologies Used
-
-- HTML  
-- CSS  
-- JavaScript  
-- Node.js (for any backend functionality, if used)  
-- OpenWeatherMap API (or your chosen weather API)  
-
-## Getting Started
-
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/your-username/weather-dashboard-capstone.git
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
