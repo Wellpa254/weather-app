@@ -15,7 +15,9 @@ function App() {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
       );
-      if (!response.ok) throw new Error("Try searching that city in the ant kingdom!!");
+      if (!response.ok) {
+        throw new Error("Try the Ant kingdom!!");
+      }
       const data = await response.json();
       setWeather(data);
     } catch (err) {
@@ -25,29 +27,17 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-sand">
-      {/* Pan-African triple ring via layered box-shadows (always visible) */}
-      <div
-        className="relative w-[min(92vw,700px)] rounded-3xl bg-ivory p-6 md:p-8"
-        style={{
-          boxShadow:
-            "0 0 0 6px #dc2626, 0 0 0 12px #000000, 0 0 0 18px #16a34a, 0 16px 60px rgba(0,0,0,0.25)",
-        }}
-      >
-        {/* Thin “flag ribbons” top & bottom for extra flair */}
-        <div className="pointer-events-none absolute left-6 right-6 -top-3 h-1.5 rounded-full bg-gradient-to-r from-red-600 via-black to-green-600 opacity-95" />
-        <div className="pointer-events-none absolute left-6 right-6 -bottom-3 h-1.5 rounded-full bg-gradient-to-r from-green-600 via-black to-red-600 opacity-95" />
-
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-6 text-tribal text-center tracking-wide">
-          Weather Dashboard 🌍
+    <div
+      className="min-h-screen flex items-center justify-center transition-colors duration-700 
+      bg-gradient-to-b from-black via-red-600 via-50% to-green-600"
+    >
+      <div className="rounded-xl p-6 bg-white/80 shadow-lg max-w-md w-full">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Weather Today 🇰🇪
         </h1>
-
         <SearchBar onSearch={fetchWeather} />
         <ErrorMessage message={error} />
-
-        <div className="mt-6">
-          <WeatherCard weather={weather} />
-        </div>
+        <WeatherCard weather={weather} />
       </div>
     </div>
   );
