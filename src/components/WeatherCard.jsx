@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import destinations from "../data/destinations";
 
-const WeatherCard = ({ weather }) => {
-  // Hooks always at top
-  const [localTime, setLocalTime] = useState(null);
+// Import images from assets
+import sunnyImg from "../assets/sunny.jpg.jpg";
+import nightImg from "../assets/night.jpg.jpg";
+import rainyImg from "../assets/rainy.jpg.jpg";
+import cloudyImg from "../assets/cloudy.jpg.jpg";
+import snowyImg from "../assets/snowy.jpg.jpg";
 
-  const timezoneOffset = weather?.timezone || 0; // use 0 if weather is undefined
+const WeatherCard = ({ weather }) => {
+  const [localTime, setLocalTime] = useState(null);
+  const timezoneOffset = weather?.timezone || 0;
 
   useEffect(() => {
     const updateTime = () => {
@@ -20,10 +25,9 @@ const WeatherCard = ({ weather }) => {
     return () => clearInterval(interval);
   }, [timezoneOffset]);
 
-  // If weather is not loaded yet, show nothing or a placeholder
-  if (!weather || !localTime) return <p className="text-center mt-4">Enter a city to see the weather...</p>;
+  if (!weather || !localTime)
+    return <p className="text-center mt-4">Enter a city to see the weather...</p>;
 
-  // Format date/time
   const formattedDate = localTime.toLocaleDateString("en-GB", {
     weekday: "long",
     year: "numeric",
@@ -55,9 +59,9 @@ const WeatherCard = ({ weather }) => {
   } else if (weather.weather[0].main === "Clouds") {
     suggestion = "Good for outdoor photography 📸";
     category = "photography";
-  } else if (weather.weather[0].main === "Hot") {
-    suggestion = "Great for swimming 🏊 or beach visit 🌊";
-    category = "swimming";
+  } else if (weather.weather[0].main === "Snow") {
+    suggestion = "Time for building a snowman ⛄";
+    category = "photography";
   }
 
   const city = weather.name;
@@ -68,41 +72,58 @@ const WeatherCard = ({ weather }) => {
     ];
 
   const makeMapsLink = (place) =>
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name || place + " " + city)}`;
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      place.name || place + " " + city
+    )}`;
+
+  // Choose background image
+  let bgImage = sunnyImg; // default
+  if (weather.weather[0].main === "Clear" && !isDay) bgImage = nightImg;
+  else if (weather.weather[0].main === "Rain") bgImage = rainyImg;
+  else if (weather.weather[0].main === "Clouds") bgImage = cloudyImg;
+  else if (weather.weather[0].main === "Snow") bgImage = snowyImg;
 
   return (
-    <div className="mt-6 p-4 bg-white rounded-xl shadow-md text-center">
-      <h2 className="text-2xl font-bold text-gray-800">
-        {weather.name}, {weather.sys.country}
-      </h2>
-      <p className="text-gray-600">{formattedDate}</p>
-      <p className="text-gray-600 mb-2">
-        Local Time: <span className="font-semibold">{formattedTime}</span>
-      </p>
-      <p className={`mb-4 font-semibold ${isDay ? "text-yellow-600" : "text-blue-800"}`}>
-        {isDay ? "☀️ Daytime" : "🌙 Nighttime"}
-      </p>
-      <p className="text-4xl font-bold">{Math.round(weather.main.temp)}°C</p>
-      <p className="capitalize text-gray-600">{weather.weather[0].description}</p>
+    <div
+      className="mt-6 p-4 rounded-xl shadow-md text-center text-white bg-cover bg-center relative"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        minHeight: "500px",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/30 rounded-xl"></div>
 
-      <div className="mt-4 p-3 bg-gray-100 rounded-lg">
-        <h3 className="text-lg font-semibold text-gray-800">Suggested Activity:</h3>
-        <p className="text-gray-700">{suggestion}</p>
+      <div className="relative z-10">
+        <h2 className="text-2xl font-bold">
+          {weather.name}, {weather.sys.country}
+        </h2>
+        <p>{formattedDate}</p>
+        <p className="mb-2">
+          Local Time: <span className="font-semibold">{formattedTime}</span>
+        </p>
+        <p className="mb-4 font-semibold">{isDay ? "☀️ Daytime" : "🌙 Nighttime"}</p>
+        <p className="text-4xl font-bold">{Math.round(weather.main.temp)}°C</p>
+        <p className="capitalize">{weather.weather[0].description}</p>
 
-        <ul className="mt-2 text-sm text-blue-600 list-disc list-inside">
-          {cityDestinations.map((place, index) => (
-            <li key={index}>
-              <a
-                href={place.link || makeMapsLink(place)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                {place.name || place}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-4 p-3 bg-white/20 rounded-lg">
+          <h3 className="text-lg font-semibold">Suggested Activity:</h3>
+          <p>{suggestion}</p>
+
+          <ul className="mt-2 list-disc list-inside text-sm">
+            {cityDestinations.map((place, index) => (
+              <li key={index}>
+                <a
+                  href={place.link || makeMapsLink(place)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  {place.name || place}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
