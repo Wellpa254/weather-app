@@ -91,21 +91,26 @@ const WeatherCard = ({ weather }) => {
         minHeight: "500px",
       }}
     >
-      <div className="absolute inset-0 bg-black/30 rounded-xl"></div>
+      {/* Gradient Overlay (better readability than flat black) */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
 
       <div className="relative z-10">
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-2xl font-bold drop-shadow-lg">
           {weather.name}, {weather.sys.country}
         </h2>
-        <p>{formattedDate}</p>
-        <p className="mb-2">
+        <p className="drop-shadow">{formattedDate}</p>
+        <p className="mb-2 drop-shadow">
           Local Time: <span className="font-semibold">{formattedTime}</span>
         </p>
-        <p className="mb-4 font-semibold">{isDay ? "☀️ Daytime" : "🌙 Nighttime"}</p>
-        <p className="text-4xl font-bold">{Math.round(weather.main.temp)}°C</p>
-        <p className="capitalize">{weather.weather[0].description}</p>
+        <p className="mb-4 font-semibold drop-shadow">
+          {isDay ? "☀️ Daytime" : "🌙 Nighttime"}
+        </p>
+        <p className="text-4xl font-bold drop-shadow-lg">
+          {Math.round(weather.main.temp)}°C
+        </p>
+        <p className="capitalize drop-shadow">{weather.weather[0].description}</p>
 
-        <div className="mt-4 p-3 bg-white/20 rounded-lg">
+        <div className="mt-4 p-3 bg-white/20 rounded-lg backdrop-blur-sm">
           <h3 className="text-lg font-semibold">Suggested Activity:</h3>
           <p>{suggestion}</p>
 
